@@ -1,5 +1,6 @@
 package br.com.gridsoft.folheados.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +17,7 @@ public class Vendedor extends Endereco {
 	
 	private String nome;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	private Usuario usuario;
 
 	public Integer getId() {

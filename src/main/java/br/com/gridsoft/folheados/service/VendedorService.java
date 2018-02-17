@@ -32,6 +32,19 @@ public class VendedorService {
 		return repository.findAll();
 	}
 	
+	public Vendedor buscarVendedor(Integer id){
+		return repository.findOne(id);
+	}
+	
+	public void excluir(Integer id) throws Exception{
+		try{
+			repository.delete(id);
+		}catch(Exception e){
+			e.printStackTrace();
+			throw new Exception("Não foi possível realizar a exclusão do vendedor");
+		}
+	}
+	
 	private Vendedor tratarCriacaoDeUsuario(Vendedor vendedorParaTratar) throws Exception{
 		if(vendedorParaTratar.getUsuario().getId() == null ){
 			vendedorParaTratar.setUsuario(usuarioService.novo(vendedorParaTratar.getUsuario()));
