@@ -10,7 +10,7 @@ public class Endereco {
 	private String rua;
 	
 	private String numeroEndereco;
-	
+	  
 	private String complemento;
 	
 	private String bairro;
@@ -20,7 +20,7 @@ public class Endereco {
 	private String cidade;
 	
 	private String estado;
-
+	
 	
 	public String getRua() {
 		return rua;
