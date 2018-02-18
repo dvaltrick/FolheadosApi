@@ -16,4 +16,9 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
            "  JOIN FETCH A.precos B " +
 		   " WHERE B.dataInicio <= :data_atual ")
 	public List<Produto> catalogo(@Param("data_atual") Date data_atual );
+	
+
+	@Query("SELECT DISTINCT A FROM Produto A " +
+           "  LEFT JOIN A.precos B ")
+	public List<Produto> listar();
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,6 +53,32 @@ public class ProdutoController {
 	@ResponseBody
 	public List<Produto> catalogo(){
 		return service.catalogo();
+	}
+	
+	@RequestMapping(value="/api/produto/{id}",
+	        method=RequestMethod.GET,
+	        produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Produto buscarProduto(@PathVariable("id") Integer id){
+		return service.buscarProduto(id);
+	}
+	
+	@RequestMapping(value="/api/produto/{id}",
+	        method=RequestMethod.DELETE,
+	        produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Map<String,String> excluir(@PathVariable("id") Integer id){
+		Map<String,String> result = new HashMap<String,String>();
+		
+		try {
+			service.excluir(id);
+			result.put("success", "sucesso");
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("erro", e.getMessage());
+		}
+		
+		return result;
 	}
 	
 }

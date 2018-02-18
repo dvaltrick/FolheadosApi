@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -26,8 +27,11 @@ public class Preco {
 	
 	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Produto.class)
 	@JoinColumn(name="produto_id")
+	@JsonBackReference
 	private Produto produto;
 	
+	@Transient
+	private Integer produtoId;
 	
 	public void setDataInicio(Date dataInicio) {
 		this.dataInicio = dataInicio;
@@ -61,4 +65,17 @@ public class Preco {
 		return dataInicio;
 	}
 
+	public Integer getProdutoId() {
+		if(produtoId == null && produto != null){
+			return produto.getId();
+		}else{
+			return produtoId;
+		}
+	}
+
+	public void setProdutoId(Integer produtoId) {
+		this.produtoId = produtoId;
+	}
+
+	
 }

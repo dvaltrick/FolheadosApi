@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -19,6 +20,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -43,6 +45,8 @@ public class Produto {
 	@LazyCollection(LazyCollectionOption.TRUE)
 	@OneToMany(mappedBy="produto")
 	@Cascade({CascadeType.ALL})
+	@OrderBy("dataInicio desc")
+	@JsonManagedReference
 	private Set<Preco> precos;
 
 	public Integer getId() {
