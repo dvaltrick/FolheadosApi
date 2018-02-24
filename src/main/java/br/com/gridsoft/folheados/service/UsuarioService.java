@@ -56,6 +56,18 @@ public class UsuarioService {
 		return repository.findAll();
 	}
 	
+	public Usuario login(Usuario usuarioLogin) throws Exception{
+		Usuario usuarioLogado = null;
+		
+		verificarPreenchimentoUsuario(usuarioLogin);
+		usuarioLogado = repository.login(usuarioLogin.getNome(), usuarioLogin.getSenha());
+		
+		if(usuarioLogado == null){
+			throw new Exception("Usuário e senha incorretos");
+		}
+		
+		return usuarioLogado;
+	}
 	
 	private Usuario inicializaPerfilDefault(Usuario usuarioTratamento){
 		if(usuarioTratamento.getPerfil() == null){
