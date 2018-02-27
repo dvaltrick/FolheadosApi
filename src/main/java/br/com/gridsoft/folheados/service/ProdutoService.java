@@ -1,18 +1,12 @@
 package br.com.gridsoft.folheados.service;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.gridsoft.folheados.model.Preco;
 import br.com.gridsoft.folheados.model.Produto;
 import br.com.gridsoft.folheados.repository.ProdutoRepository;
 

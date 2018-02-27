@@ -49,6 +49,20 @@ public class Produto {
 	@JsonManagedReference
 	private Set<Preco> precos;
 
+	
+	@LazyCollection(LazyCollectionOption.TRUE)
+	@OneToMany(mappedBy="produto")
+	@Cascade({CascadeType.ALL})
+	private Set<Estoque> estoques;
+	
+	public Set<Estoque> getEstoques() {
+		return estoques;
+	}
+
+	public void setEstoques(Set<Estoque> estoques) {
+		this.estoques = estoques;
+	}
+
 	public Integer getId() {
 		return id;
 	}
