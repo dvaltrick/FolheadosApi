@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Estoque {
 	
@@ -17,10 +20,12 @@ public class Estoque {
 	
 	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Produto.class)
 	@JoinColumn(name="produto_id")
+	@JsonBackReference
 	private Produto produto;
 	
-	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Produto.class)
+	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Franquia.class)
 	@JoinColumn(name="franquia_id")
+	@JsonBackReference
 	private Franquia franquia;
 	
 	private Integer quantidade;

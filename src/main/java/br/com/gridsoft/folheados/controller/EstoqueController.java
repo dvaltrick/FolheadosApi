@@ -40,20 +40,21 @@ public class EstoqueController {
 		return result;
 	}
 	
-	@RequestMapping(value="/api/alterarEstoque",
-	        method={RequestMethod.PUT},
+	@RequestMapping(value="/api/gravarEstoque",
+	        method={RequestMethod.POST},
 	        consumes=MediaType.APPLICATION_JSON_VALUE,
 	        produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Map<String, Object> alteraEstoque(@RequestBody HashMap<String, Object> alteracao){
-		Map<String, Object> result = new HashMap<String,Object>();
+	public HashMap<String, Object> gravarEstoque(@RequestBody HashMap<String, Object> alteracao){
+		HashMap<String, Object> result = new HashMap<String,Object>();
 		Estoque estoque = null;
 		
 		try{
-			Integer idEstoque = Integer.parseInt(alteracao.get("id").toString());
+			Integer idFranquia = Integer.parseInt(alteracao.get("idFranquia").toString());
+			Integer idProduto = Integer.parseInt(alteracao.get("idProduto").toString());
 			Integer quantidade = Integer.parseInt(alteracao.get("quantidade").toString());
 			
-			estoque = service.alteraEstoque(idEstoque, quantidade);
+			estoque = service.gravarEstoque(idFranquia,idProduto, quantidade);
 			result.put("estoque", estoque);
 		}catch(Exception e){
 			result.put("erro", e.getMessage());

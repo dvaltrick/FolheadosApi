@@ -15,6 +15,12 @@ public class EstoqueService {
 	@Autowired
 	private EstoqueRepository repository;
 	
+	@Autowired
+	private FranquiaService franquiaService;
+	
+	@Autowired
+	private ProdutoService produtoService;
+	
 	public Estoque gravar(Estoque estoque) throws Exception{
 		Estoque retorno = null;
 		
@@ -48,23 +54,39 @@ public class EstoqueService {
 		}
 	}
 	
-	public Estoque alteraEstoque(Integer id, Integer quantidade) throws Exception{
-		Estoque alterado = null;
+	public Estoque gravarEstoque(Integer idFranquia, Integer idProduto, Integer quantidade) throws Exception{
+		
+		verificaProblemasEstoque(idFranquia, idProduto);
+		
+		Estoque estoqueSalvo = null;
 		try{
-			Estoque estoqueAlterar = repository.findOne(id);
-			
-			if(estoqueAlterar != null){
-				estoqueAlterar.setQuantidade(estoqueAlterar.getQuantidade() + quantidade);
-			
-				alterado = repository.save(estoqueAlterar);
-			}else{
-				throw new Exception("Estoque não cadastrado");
+			Estoque estoqueGravar = repository.buscarEstoque(idFranquia, idProduto);
+			if(estoqueGravar == null){
+				estoqueGravar = new Estoque();
+				estoqueGravar.setFranquia(franquiaService.buscarFranquia(idFranquia));
+				estoqueGravar.setProduto(produtoService.buscarProduto(idProduto));
+				estoqueGravar.setQuantidade(quantidade);
+			} else{
+				estoqueGravar.setQuantidade(estoqueGravar.getQuantidade() + quantidade);
 			}
+			
+			estoqueSalvo = repository.save(estoqueGravar);
 		}catch(Exception e){
 			throw new Exception("Não foi possível alterar o estoque");
 		}
 		
-		return alterado;
+		return estoqueSalvo;
+	}
+	
+	
+	private void verificaProblemasEstoque(Integer idFranquia, Integer idProduto) throws Exception{
+		if(franquiaService.buscarFranquia(idFranquia) == null){
+			throw new Exception("Franquia não cadastrada");
+		}
+		
+		if(produtoService.buscarProduto(idProduto) == null){
+			throw new Exception("Produto não cadastrado");
+		}
 	}
 	
 }

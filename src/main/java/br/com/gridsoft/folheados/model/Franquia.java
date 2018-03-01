@@ -32,6 +32,7 @@ public class Franquia extends Endereco {
 	
 	@LazyCollection(LazyCollectionOption.TRUE)
 	@OneToMany(mappedBy="franquia")
+	@JsonManagedReference
 	private Set<Estoque> franquias;
 	
 	public Integer getId() {

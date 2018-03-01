@@ -16,4 +16,12 @@ public interface EstoqueRepository extends JpaRepository<Estoque, Integer> {
 		   " WHERE B.id = :franquia_id " )
 	public List<Estoque> buscar(@Param("franquia_id") Integer franquia_id);
 
+	
+	@Query("SELECT A FROM Estoque A  " +
+	       "  JOIN FETCH A.franquia B " +
+	       "  JOIN FETCH A.produto C " +
+		   " WHERE B.id = :franquia_id " +
+	       "   AND C.id = :produto_id ")
+	public Estoque buscarEstoque(@Param("franquia_id") Integer franquia_id, @Param("produto_id") Integer produto_id);
+
 }
