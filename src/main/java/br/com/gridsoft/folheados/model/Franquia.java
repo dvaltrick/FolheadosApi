@@ -33,7 +33,12 @@ public class Franquia extends Endereco {
 	@LazyCollection(LazyCollectionOption.TRUE)
 	@OneToMany(mappedBy="franquia")
 	@JsonManagedReference
-	private Set<Estoque> franquias;
+	private Set<Estoque> estoques;
+	
+	@LazyCollection(LazyCollectionOption.TRUE)
+	@OneToMany(mappedBy="franquia")
+	@JsonManagedReference(value="franquia_pedido")
+	private Set<Pedido> pedidos;
 	
 	public Integer getId() {
 		return id;
@@ -57,6 +62,22 @@ public class Franquia extends Endereco {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public Set<Estoque> getEstoques() {
+		return estoques;
+	}
+
+	public void setEstoques(Set<Estoque> estoques) {
+		this.estoques = estoques;
+	}
+
+	public Set<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(Set<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 	
 	
