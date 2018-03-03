@@ -7,6 +7,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.gridsoft.folheados.model.Categoria;
 import br.com.gridsoft.folheados.model.Produto;
 import br.com.gridsoft.folheados.repository.ProdutoRepository;
 
@@ -18,8 +19,16 @@ public class ProdutoService {
 	@Autowired
 	private PrecoService precoService;
 	
+	@Autowired
+	private CategoriaService categoriaService;
+	
 	public Produto gravar(Produto produtoParaGravar) throws Exception{
 		try{
+			if(produtoParaGravar.getCategoriaId() != null){
+				Categoria categoria = categoriaService.buscar(produtoParaGravar.getCategoriaId());
+				produtoParaGravar.setCategoria(categoria);
+			}
+			
 			if(produtoParaGravar.getImagemBase64() != null){
 				produtoParaGravar.setImagem(Base64.decodeBase64(produtoParaGravar.getImagemBase64().getBytes()));
 			}

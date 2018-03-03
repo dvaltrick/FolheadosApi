@@ -20,7 +20,7 @@ public class Estoque {
 	
 	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Produto.class)
 	@JoinColumn(name="produto_id")
-	@JsonBackReference
+	@JsonBackReference(value="estoques")
 	private Produto produto;
 	
 	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Franquia.class)

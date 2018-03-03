@@ -5,10 +5,13 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -19,6 +22,7 @@ import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -46,15 +50,44 @@ public class Produto {
 	@OneToMany(mappedBy="produto")
 	@Cascade({CascadeType.ALL})
 	@OrderBy("dataInicio desc")
-	@JsonManagedReference
+	@JsonManagedReference(value="precos")
 	private Set<Preco> precos;
 
 	
 	@LazyCollection(LazyCollectionOption.TRUE)
 	@OneToMany(mappedBy="produto")
 	@Cascade({CascadeType.ALL})
+	@JsonManagedReference(value="estoques")
 	private Set<Estoque> estoques;
 	
+	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Categoria.class)
+	@JoinColumn(name="categoria_id", nullable=true, referencedColumnName="id")
+	@JsonBackReference(value="categoria")
+	private Categoria categoria;
+	
+	@Transient
+	private Integer categoriaId;
+	
+	public Integer getCategoriaId() {
+		if(categoriaId  != null || categoria == null){
+			return categoriaId;
+		}else{
+			return categoria.getId();
+		}
+	}
+
+	public void setCategoriaId(Integer categoriaId) {
+		this.categoriaId = categoriaId;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
 	public Set<Estoque> getEstoques() {
 		return estoques;
 	}

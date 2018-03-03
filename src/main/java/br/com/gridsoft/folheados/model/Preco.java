@@ -27,7 +27,7 @@ public class Preco {
 	
 	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Produto.class)
 	@JoinColumn(name="produto_id")
-	@JsonBackReference
+	@JsonBackReference(value="precos")
 	private Produto produto;
 	
 	@Transient
