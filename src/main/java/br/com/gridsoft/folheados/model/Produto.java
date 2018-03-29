@@ -68,6 +68,24 @@ public class Produto {
 	@Transient
 	private Integer categoriaId;
 	
+	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Caracteristica.class)
+	@JoinColumn(name="caracteristica_id", nullable=true, referencedColumnName="id")
+	@JsonBackReference(value="caracteristica")
+	private Caracteristica caracteristica;
+
+	@Transient
+	private Integer caracteristicaId;
+	
+	private Double preco;
+	
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
 	public Integer getCategoriaId() {
 		if(categoriaId  != null || categoria == null){
 			return categoriaId;
@@ -78,6 +96,18 @@ public class Produto {
 
 	public void setCategoriaId(Integer categoriaId) {
 		this.categoriaId = categoriaId;
+	}
+	
+	public Integer getCaracteristicaId() {
+		if(caracteristicaId  != null || caracteristica == null){
+			return caracteristicaId;
+		}else{
+			return caracteristica.getId();
+		}
+	}
+
+	public void setCaracteristicaId(Integer caracteristicaId) {
+		this.caracteristicaId = caracteristicaId;
 	}
 
 	public Categoria getCategoria() {
@@ -147,5 +177,15 @@ public class Produto {
 	public void setImagemBase64(String imagemBase64) {
 		this.imagemBase64 = imagemBase64;
 	}
+
+	public Caracteristica getCaracteristica() {
+		return caracteristica;
+	}
+
+	public void setCaracteristica(Caracteristica caracteristica) {
+		this.caracteristica = caracteristica;
+	}
+	
+	
 	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.gridsoft.folheados.model.Usuario;
 import br.com.gridsoft.folheados.model.Vendedor;
 import br.com.gridsoft.folheados.repository.VendedorRepository;
 
@@ -34,6 +35,10 @@ public class VendedorService {
 	
 	public Vendedor buscarVendedor(Integer id){
 		return repository.findOne(id);
+	}
+	
+	public Vendedor buscarPorUsuario(Usuario usuario){
+		return repository.buscaVendedorUsuario(usuario.getNome()); 
 	}
 	
 	public void excluir(Integer id) throws Exception{

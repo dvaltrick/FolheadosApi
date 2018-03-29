@@ -7,8 +7,10 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.gridsoft.folheados.model.Caracteristica;
 import br.com.gridsoft.folheados.model.Categoria;
 import br.com.gridsoft.folheados.model.Produto;
+import br.com.gridsoft.folheados.repository.CategoriaRepository;
 import br.com.gridsoft.folheados.repository.ProdutoRepository;
 
 @Service
@@ -17,16 +19,27 @@ public class ProdutoService {
 	private ProdutoRepository repository;
 	
 	@Autowired
+	private CategoriaRepository categRepository;
+	
+	@Autowired
 	private PrecoService precoService;
 	
 	@Autowired
 	private CategoriaService categoriaService;
+	
+	@Autowired
+	private CaracteristicaService caracteristicaService;
 	
 	public Produto gravar(Produto produtoParaGravar) throws Exception{
 		try{
 			if(produtoParaGravar.getCategoriaId() != null){
 				Categoria categoria = categoriaService.buscar(produtoParaGravar.getCategoriaId());
 				produtoParaGravar.setCategoria(categoria);
+			}
+			
+			if(produtoParaGravar.getCaracteristicaId() != null){
+				Caracteristica caracteristica = caracteristicaService.get(produtoParaGravar.getCaracteristicaId());
+				produtoParaGravar.setCaracteristica(caracteristica);
 			}
 			
 			if(produtoParaGravar.getImagemBase64() != null){
@@ -51,10 +64,10 @@ public class ProdutoService {
 		}
 	}
 	
-	public List<Produto> catalogo(){
+	public List<Produto> catalogo(Integer categoriaId){
 		Date dataAtual = new Date();
 		System.out.println(dataAtual);
-		return repository.catalogo(dataAtual);
+		return categRepository.catalogo(categoriaId);
 	}
 
 	public List<Produto> buscarTodos() {
@@ -62,7 +75,7 @@ public class ProdutoService {
 	}
 	
 	public Produto buscarProduto(Integer id){
-		return repository.findOne(id);
+		return repository.get(id);
 	}
 	
 }

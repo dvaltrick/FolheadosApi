@@ -1,5 +1,7 @@
 package br.com.gridsoft.folheados.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,9 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.gridsoft.folheados.enumarator.StatusPedido;
 
@@ -36,6 +45,23 @@ public class Pedido {
 	private Integer franquiaId;
 	
 	private StatusPedido status;
+
+	private Float total;
+
+	@LazyCollection(LazyCollectionOption.TRUE)
+	@OneToMany(mappedBy="pedido")
+	@Cascade({CascadeType.ALL})
+	@JsonManagedReference(value="pedido_produto")
+	private Set<ItemPedido> itens;
+
+
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
 
 	public Integer getId() {
 		return id;
@@ -91,6 +117,14 @@ public class Pedido {
 
 	public void setStatus(StatusPedido status) {
 		this.status = status;
+	}
+
+	public Float getTotal() {
+		return total;
+	}
+
+	public void setTotal(Float total) {
+		this.total = total;
 	}
 	
 	

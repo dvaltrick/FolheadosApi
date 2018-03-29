@@ -25,7 +25,8 @@ public class CategoriaService {
 	}
 	
 	public List<Categoria> buscar(){
-		return repository.findAll();
+		//return repository.findAll();
+		return repository.getAll();
 	}
 	
 	public Categoria buscar(Integer id){

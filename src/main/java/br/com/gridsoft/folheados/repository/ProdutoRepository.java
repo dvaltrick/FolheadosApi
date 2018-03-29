@@ -13,7 +13,7 @@ import br.com.gridsoft.folheados.model.Produto;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 	@Query("SELECT A FROM Produto A " +
-           "  JOIN FETCH A.precos B " +
+           "  LEFT JOIN FETCH A.precos B " +
 		   " WHERE B.dataInicio <= :data_atual ")
 	public List<Produto> catalogo(@Param("data_atual") Date data_atual );
 	
@@ -21,4 +21,10 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 	@Query("SELECT DISTINCT A FROM Produto A " +
            "  LEFT JOIN A.precos B ")
 	public List<Produto> listar();
+	
+	@Query("SELECT A FROM Produto A " +
+	       " JOIN FETCH A.categoria B " +
+		   " JOIN FETCH A.caracteristica C " +
+	       " WHERE A.id = :id")
+	public Produto get(@Param("id") Integer id);
 }

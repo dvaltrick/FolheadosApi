@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.gridsoft.folheados.model.Produto;
 import br.com.gridsoft.folheados.service.ProdutoService;
 
+@CrossOrigin(origins="*")
 @RestController
 public class ProdutoController {
 	@Autowired
@@ -47,12 +49,12 @@ public class ProdutoController {
 		return service.buscarTodos();
 	}
 	
-	@RequestMapping(value="/api/catalogo",
+	@RequestMapping(value="/api/catalogo/{cat}",
 			        method=RequestMethod.GET,
 			        produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Produto> catalogo(){
-		return service.catalogo();
+	public List<Produto> catalogo(@PathVariable("cat") Integer categoriaId){
+		return service.catalogo(categoriaId);
 	}
 	
 	@RequestMapping(value="/api/produto/{id}",

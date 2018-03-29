@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import br.com.gridsoft.folheados.model.Estoque;
 import br.com.gridsoft.folheados.model.Pedido;
 import br.com.gridsoft.folheados.service.PedidoService;
 
+@CrossOrigin(origins="*")
 @RestController
 public class PedidoController {
 	@Autowired
